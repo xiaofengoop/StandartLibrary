@@ -100,10 +100,7 @@ namespace StandartLibrary
             _p = Marshal.AllocHGlobal(_size * _number);
         }
 
-        public MyList() : this(-1)
-        {
-            Console.WriteLine(666);
-        }
+        public MyList() : this(-1) { }
 
         public void Add(T[] datas)
         {
