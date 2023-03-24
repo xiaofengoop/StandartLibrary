@@ -102,7 +102,7 @@ namespace StandartLibrary
 
         public MyList() : this(-1)
         {
-
+            Console.WriteLine(666);
         }
 
         public void Add(T[] datas)
