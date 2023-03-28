@@ -1,4 +1,4 @@
-﻿using StandartLibrary.异常类;
+﻿using StandartLibrary.MyExceptionClass;
 using System.Reflection;
 
 namespace StandartLibrary

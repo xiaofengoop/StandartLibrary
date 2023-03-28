@@ -1,6 +1,6 @@
-﻿using StandartLibrary.分辨率类;
-using StandartLibrary.屏幕分辨率API类;
-using StandartLibrary.异常类;
+﻿using StandartLibrary.MyResolutionClass;
+using StandartLibrary.MyNativeAPIClass;
+using StandartLibrary.MyExceptionClass;
 using System.Drawing;
 using System.Reflection;
 using System.Runtime.InteropServices;

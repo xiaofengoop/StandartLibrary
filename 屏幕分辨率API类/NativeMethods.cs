@@ -1,11 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Runtime.InteropServices;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Runtime.InteropServices;
 
-namespace StandartLibrary.屏幕分辨率API类
+namespace StandartLibrary.MyNativeAPIClass
 {
     // Win32 函数在托管环境下的声明
     public class NativeMethods

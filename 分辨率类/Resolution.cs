@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace StandartLibrary.分辨率类
+﻿namespace StandartLibrary.MyResolutionClass
 {
     public static class Resolution
     {

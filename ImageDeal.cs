@@ -1,5 +1,4 @@
 ﻿using Emgu.CV;
-using Emgu.CV.ImgHash;
 using Emgu.CV.Structure;
 using System.Drawing;
 using System.Drawing.Drawing2D;
@@ -69,6 +68,7 @@ namespace StandartLibrary
             using var t2 = t1.SmoothMedian(k);
             t1.Dispose();
             Image = t2.ToBitmap();
+            
         }
     }
 }

@@ -1,11 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Runtime.InteropServices;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Runtime.InteropServices;
 
-namespace StandartLibrary.控制台类
+namespace StandartLibrary.MyConsoleClass
 {
 #pragma warning disable CS8602 // 解引用可能出现空引用。
     public class ConsoleClass

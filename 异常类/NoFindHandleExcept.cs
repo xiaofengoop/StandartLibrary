@@ -1,11 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Runtime.Serialization;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace StandartLibrary.异常类
+﻿namespace StandartLibrary.MyExceptionClass
 {
     public enum Language
     {
