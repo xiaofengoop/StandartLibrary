@@ -1,4 +1,7 @@
-﻿using System.Drawing;
+﻿using Emgu.CV;
+using Emgu.CV.ImgHash;
+using Emgu.CV.Structure;
+using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Drawing.Imaging;
 using System.Runtime.Versioning;
@@ -34,7 +37,7 @@ namespace StandartLibrary
             get => _opacity;
             set
             {
-                if (value > 1 || value <= 0 || value == Opacity) { return; }
+                if (value > 1 || value <= 0 || value == Opacity) { throw new ArgumentOutOfRangeException("值只能在0(大于)到1(小于)之间"); }
                 var bim = new Bitmap(Size.Width, Size.Height);
                 using var g = Graphics.FromImage(bim);
                 var matrix = new ColorMatrix() { Matrix33 = value };
@@ -55,6 +58,17 @@ namespace StandartLibrary
             g.DrawImage(img, 0, 0, bim.Width, bim.Height);
             Image = bim;
             _size = new Size(img.Width, img.Height);
+        }
+
+        public void SmoothMedian(int k)
+        {
+            if(k % 2 == 0) { k -= 1; }
+            if(k < 1) { throw new ArgumentOutOfRangeException("值错误"); }
+            var t1 = BitmapExtension.ToImage<Bgr, byte>((Bitmap)Image);
+            Image.Dispose();
+            using var t2 = t1.SmoothMedian(k);
+            t1.Dispose();
+            Image = t2.ToBitmap();
         }
     }
 }
