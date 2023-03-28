@@ -11,13 +11,13 @@ namespace StandartLibrary
         private Size _size;
         private float _opacity = 1;
 
-        public Image Image { get; set; }
+        public Image Image { get; private set; }
         public Size Size
         {
             get => _size;
             set
             {
-                if(value != _size)
+                if (value != _size)
                 {
                     var bim = new Bitmap(value.Width, value.Height);
                     using var g = Graphics.FromImage(bim);
@@ -34,7 +34,7 @@ namespace StandartLibrary
             get => _opacity;
             set
             {
-                if(value > 1 || value <= 0 || value == Opacity) { return; }
+                if (value > 1 || value <= 0 || value == Opacity) { return; }
                 var bim = new Bitmap(Size.Width, Size.Height);
                 using var g = Graphics.FromImage(bim);
                 var matrix = new ColorMatrix() { Matrix33 = value };
@@ -50,7 +50,10 @@ namespace StandartLibrary
 
         public ImageDeal(Image img)
         {
-            Image = img;
+            var bim = new Bitmap(img.Width, img.Height);
+            using var g = Graphics.FromImage(bim);
+            g.DrawImage(img, 0, 0, bim.Width, bim.Height);
+            Image = bim;
             _size = new Size(img.Width, img.Height);
         }
     }
