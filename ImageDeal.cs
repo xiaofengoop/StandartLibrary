@@ -7,7 +7,7 @@ using System.Runtime.Versioning;
 
 namespace StandartLibrary
 {
-    [SupportedOSPlatform("windows")]
+    [SupportedOSPlatform(nameof(Platform.windows))]
     public class ImageDeal : IDisposable
     {
         private Size _size;
