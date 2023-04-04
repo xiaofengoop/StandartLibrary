@@ -8,7 +8,7 @@ namespace StandartLibrary.MyNativeAPIClass
         // 平台调用的申明
         [DllImport("user32.dll")]
         public static extern int EnumDisplaySettings(
-         string deviceName, int modeNum, ref DEVMODE devMode);
+         string? deviceName, int modeNum, ref DEVMODE devMode);
         [DllImport("user32.dll")]
         public static extern int ChangeDisplaySettings(
            ref DEVMODE devMode, int flags);

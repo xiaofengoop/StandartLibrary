@@ -7,10 +7,11 @@ namespace StandartLibrary
     {
         public static void JudgeMatch()
         {
-            Type[]? types = BasicLibrary.GetClassWithTheAttribute(typeof(GetMethodNumberAttribute));
+            var types = BasicLibrary.GetClassWithTheAttribute(typeof(GetMethodNumberAttribute));
+            if(types == null) { return; }
             foreach (Type item in types)
             {
-                GetMethodNumberAttribute attClass = item.GetCustomAttribute<GetMethodNumberAttribute>();
+                GetMethodNumberAttribute attClass = item.GetCustomAttribute<GetMethodNumberAttribute>()!;
                 MethodInfo[] methods = item.GetMethods();
                 int methodsNumber = methods.Length;
                 if (attClass.IgnoreObject)
@@ -38,17 +39,17 @@ namespace StandartLibrary
                     bool isCount = true;
                     if (method.IsDefined(typeof(MethodNotCountAttribute)))
                     {
-                        MethodNotCountAttribute att = method.GetCustomAttribute<MethodNotCountAttribute>();
+                        MethodNotCountAttribute att = method.GetCustomAttribute<MethodNotCountAttribute>()!;
                         methodsNumber += att.GetNumber();
                         isCount = att.IsCount;
                     }
                     else if (method.IsDefined(typeof(SetMethodNumberAttribute)) && isCount)
                     {
-                        SetMethodNumberAttribute att = method.GetCustomAttribute<SetMethodNumberAttribute>();
+                        SetMethodNumberAttribute att = method.GetCustomAttribute<SetMethodNumberAttribute>()!;
                         methodsNumber += att.GetNumber();
                     }
                 }
-                string[] memberNames = Enum.GetNames(item.GetCustomAttribute<GetMethodNumberAttribute>().EM);
+                string[] memberNames = Enum.GetNames(item.GetCustomAttribute<GetMethodNumberAttribute>()!.EM);
                 if (memberNames.Length != methodsNumber)
                 {
                     List<string> methodNames = new();
@@ -108,7 +109,16 @@ namespace StandartLibrary
         /// <param name="t">枚举对象类</param>
         public GetMethodNumberAttribute(Type t)
         {
-            EM = t;
+            //不知道为什么直接使用EM=t会报没有_em没有赋值
+            if (t == null)
+            {
+                throw new ArgumentNullException();
+            }
+            if (!t.IsInstanceOfType(standType) && !t.IsSubclassOf(standType))
+            {
+                throw new NoEnumExcept();
+            }
+            _em = t;
         }
     }
 

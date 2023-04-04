@@ -24,12 +24,12 @@ namespace StandartLibrary
         //用于获取windows--user32报错信息
         public static void SetLastError(BasicLibraryMethods blm)
         {
-            Dictionary<int, string?> keyValuePairs = new();
+            Dictionary<int, string> keyValuePairs = new();
             foreach (int item in Enum.GetValues(typeof(BasicLibraryMethods)))
             {
-                keyValuePairs.Add(item, Enum.GetName(typeof(BasicLibraryMethods), item));
+                keyValuePairs.Add(item, Enum.GetName(typeof(BasicLibraryMethods), item)!);
             }
-            foreach (KeyValuePair<int, string?> item in keyValuePairs)
+            foreach (KeyValuePair<int, string> item in keyValuePairs)
             {
                 DllImportAttribute? dllAttribute = typeof(BasicLibrary)?.GetMethod(item.Value)?.
                     GetCustomAttribute<DllImportAttribute>();
@@ -300,7 +300,7 @@ namespace StandartLibrary
         /// </summary>
         /// <param name="source">特性类型</param>
         /// <returns></returns>
-        public static Type[]? GetClassWithTheAttribute(Type source)
+        public static IEnumerable<Type>? GetClassWithTheAttribute(Type source)
         {
             //设置需要的type类型
             Type requirementType = typeof(Attribute);
@@ -320,7 +320,7 @@ namespace StandartLibrary
                     }
                 }
                 return false;
-            }).ToArray();
+            });
         }
 
         /// <summary>
