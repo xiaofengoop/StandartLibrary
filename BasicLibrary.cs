@@ -411,5 +411,21 @@ namespace StandartLibrary
             }
         }
 
+        /// <summary>
+        /// IList扩展方法Copy
+        /// </summary>
+        /// <typeparam name="T">范类</typeparam>
+        /// <param name="ns">需要复制的数组</param>
+        public static IEnumerable<T> Copy<T>(this IEnumerable<T> ns)
+        {
+            int length = ns.Count();
+            var desition = new T[length];
+            int i = 0;
+            foreach (var n in ns)
+            {
+                desition[i++] = n;
+            }
+            return desition;
+        }
     }
 }
