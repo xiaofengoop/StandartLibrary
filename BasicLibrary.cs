@@ -171,7 +171,7 @@ namespace StandartLibrary
         }
     }
 
-    public class BasicLibrary
+    public static class BasicLibrary
     {
         /// <summary>
         /// windows/user32.dll方法
