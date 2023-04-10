@@ -141,7 +141,7 @@ namespace StandartLibrary
             //'矩形宽度，最小化的窗口必须适合该宽度。
             SM_CXMINIMIZED = 57,
             //'win95 最大化窗口的默认高度为
-            SM_CYMAXIMIZED =  62,
+            SM_CYMAXIMIZED = 62,
             //'调整 Win95 窗口大小时最大宽度
             SM_CYMAXTRACK = 60,
             //'菜单高度复选标记位图
@@ -269,7 +269,7 @@ namespace StandartLibrary
             dirList.Enqueue(dirInfo);
 
             //获取所有目录
-            while(dirList.TryDequeue(out var dirTemp))
+            while (dirList.TryDequeue(out var dirTemp))
             {
                 //获取目录下所有文件
                 fileList.AddRange(dirTemp.GetFiles());
