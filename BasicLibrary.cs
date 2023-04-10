@@ -427,5 +427,11 @@ namespace StandartLibrary
             }
             return desition;
         }
+
+
+        public static void Dump(this object obj)
+        {
+            Console.WriteLine(obj);
+        }
     }
 }
