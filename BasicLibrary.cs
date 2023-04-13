@@ -428,7 +428,10 @@ namespace StandartLibrary
             return desition;
         }
 
-
+        /// <summary>
+        /// 输出函数，默认调用cw
+        /// </summary>
+        /// <param name="obj"></param>
         public static void Dump(this object obj)
         {
             Console.WriteLine(obj);
