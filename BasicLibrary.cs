@@ -8,7 +8,7 @@ using static StandartLibrary.HandleMethod;
 
 namespace StandartLibrary
 {
-    public class BasicLibraryEstension
+    public static class BasicLibraryEstension
     {
         //基本类统计方法，多为user32方法，可作为SetLastError参数，用于获取报错信息
         public enum BasicLibraryMethods
@@ -177,12 +177,8 @@ namespace StandartLibrary
         /// windows/user32.dll方法
         /// </summary>
         [GetMethodNumber(typeof(BasicLibraryEstension.BasicLibraryMethods))]
-        public static class Win32Method
+        public class Win32Method : MethodNumber
         {
-            static Win32Method()
-            {
-                MethodNumber.JudgeMatch();
-            }
 
             /// <summary>
             /// 设置进程核心

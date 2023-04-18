@@ -3,9 +3,9 @@ using System.Reflection;
 
 namespace StandartLibrary
 {
-    public static class MethodNumber
+    public class MethodNumber
     {
-        public static void JudgeMatch()
+        static MethodNumber()
         {
             var types = BasicLibrary.GetClassWithTheAttribute(typeof(GetMethodNumberAttribute));
             if(types == null) { return; }
@@ -126,6 +126,7 @@ namespace StandartLibrary
     public class MethodNotCountAttribute : Attribute
     {
         public bool IsCount { get; set; } = false;
+
         public int GetNumber()
         {
             return IsCount ? 0 : -1;
