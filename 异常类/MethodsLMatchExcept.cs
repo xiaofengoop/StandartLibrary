@@ -1,6 +1,8 @@
 ﻿namespace StandartLibrary.MyExceptionClass
 {
-    public class MethodsLMatchExcept :ApplicationException
+    
+    
+    class MethodsLMatchExcept :ApplicationException
     {
         /// <summary>
         /// 类方法名称合集

@@ -3,7 +3,9 @@
 namespace StandartLibrary.MyNativeAPIClass
 {
     // Win32 函数在托管环境下的声明
-    public class NativeMethods
+    
+    
+    class NativeMethods
     {
         // 平台调用的申明
         [DllImport("user32.dll")]

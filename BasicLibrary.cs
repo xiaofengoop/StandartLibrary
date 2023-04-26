@@ -5,6 +5,8 @@ using System.Drawing;
 using System.Reflection;
 using System.Runtime.InteropServices;
 using static StandartLibrary.HandleMethod;
+using System.Timers;
+using Timer = System.Timers.Timer;
 
 namespace StandartLibrary
 {
@@ -15,7 +17,7 @@ namespace StandartLibrary
         {
             ShowWindow,
             GetAsyncKeyState,
-            MoveWindow,
+            //MoveWindow,
             GetCursorPos,
             GetSystemMetrics,
             SetProcessAffinityMask
@@ -239,12 +241,28 @@ namespace StandartLibrary
         /// <summary>
         /// 清除控制台上一行
         /// </summary>
-        public static void ClearLine()
+        public static void ClearBackLine()
         {
             int currentLine = Console.GetCursorPosition().Top;
             Console.SetCursorPosition(0, currentLine - 1);
             Console.Write(new string(' ', Console.WindowWidth));
             Console.SetCursorPosition(0, currentLine - 1);
+        }
+
+        /// <summary>
+        /// 清空当前行
+        /// </summary>
+        public static void ClearLine()
+        {
+            int currentLine = Console.GetCursorPosition().Top;
+            Console.SetCursorPosition(0, currentLine);
+            Console.Write(new string(' ', Console.WindowWidth));
+            Console.SetCursorPosition(0, currentLine);
+        }
+
+        public static string GetAbsolutePath(string path)
+        {
+            return Path.Combine(Environment.CurrentDirectory, path);
         }
 
         /// <summary>
@@ -296,27 +314,24 @@ namespace StandartLibrary
         /// </summary>
         /// <param name="source">特性类型</param>
         /// <returns></returns>
-        public static IEnumerable<Type>? GetClassWithTheAttribute(Type source)
+        public static IEnumerable<Type> GetClassWithTheAttribute(Type source)
         {
+            var lst = new List<Type>();
             //设置需要的type类型
             Type requirementType = typeof(Attribute);
             //如果不符合，则返回null
-            if (!requirementType.IsInstanceOfType(source) && !requirementType.IsAssignableFrom(source)) { return null; }
-            //获取包含目标特性的程序集
-            Assembly? asm = source.Assembly;
-            return asm.GetTypes().Where((t) =>
+            if (!requirementType.IsInstanceOfType(source) && !requirementType.IsAssignableFrom(source)) { return lst; }
+            //获取当前程序的程序集集合
+            var asm = Assembly.GetCallingAssembly();
+            Console.WriteLine(asm);
+            foreach (var t in asm.GetTypes())
             {
-                //获取程序集中所有类并获取类中特性
-                foreach (Attribute item in t.GetCustomAttributes())
+                if (Attribute.IsDefined(t, source))
                 {
-                    //如果特性的类型和目标相同则返回true
-                    if (item.GetType() == source)
-                    {
-                        return true;
-                    }
+                    lst.Add(t);
                 }
-                return false;
-            });
+            }
+            return lst;
         }
 
         /// <summary>
@@ -408,6 +423,58 @@ namespace StandartLibrary
         }
 
         /// <summary>
+        /// 等待动画
+        /// </summary>
+        /// <param name="msg"></param>
+        static int numb = 0;
+        static Timer timer = new Timer();
+        static int sourceTop = 0;
+        static int sourceLeft = 0;
+        public static void WaitAnimal(string msg, double interval)
+        {
+            sourceTop = Console.CursorTop;
+            timer.Elapsed += PrintofWaitAnimal;
+            timer.Interval = interval;
+            Console.Write(msg);
+            sourceLeft = Console.CursorLeft;
+            timer.Start();
+        }
+
+        public static void EndAnimal()
+        {
+            timer.Stop();
+            timer.Elapsed -= PrintofWaitAnimal;
+        }
+
+        public static void BrokenAnimal()
+        {
+            EndAnimal();
+            timer.Dispose();
+        }
+
+        private static void PrintofWaitAnimal(object? source, ElapsedEventArgs e)
+        {
+            if (numb is 6)
+            {
+                int targetTop = Console.CursorTop;
+                Console.SetCursorPosition(sourceLeft, sourceTop);
+                Console.Write(new string(' ', Console.WindowWidth));
+                for (int i = sourceTop + 1; i <= targetTop; i++)
+                {
+                    Console.SetCursorPosition(0, i);
+                    Console.Write(new string(' ', Console.WindowWidth));
+                }
+                numb = 0;
+                Console.SetCursorPosition(sourceLeft, sourceTop);
+            }
+            else
+            {
+                Console.Write('.');
+                numb++;
+            }
+        }
+
+        /// <summary>
         /// IList扩展方法Copy
         /// </summary>
         /// <typeparam name="T">范类</typeparam>
@@ -431,6 +498,43 @@ namespace StandartLibrary
         public static void Dump(this object obj)
         {
             Console.WriteLine(obj);
+        }
+
+        public static void SpecialDump(this object obj)
+        {
+            var target = obj.ToString();
+            var strs = target.Split(Environment.NewLine);
+            if (strs.Length == 0)
+            {
+                Console.WriteLine(new string('-', target.Length + 2));
+                Console.WriteLine('|' + target + '|');
+                Console.WriteLine(new string('-', target.Length + 2));
+            }
+            else
+            {
+                int max = strs.Select(str => str.Length).Max();
+                Console.WriteLine(new string('-', max + 2));
+                for (int i = 0; i < strs.Length; i++)
+                {
+                    Console.WriteLine("|{0," + -max + "}|", strs[i]);
+                }
+                Console.WriteLine(new string('-', max + 2));
+            }
+        }
+
+        public static string CreateString<T>(this IEnumerable<T> strs)
+        {
+            return string.Join(Environment.NewLine, strs);
+        }
+
+        public static void ShowProperties(this object obj)
+        {
+            obj.GetType().GetProperties().Select(pro => $"{pro.Name} : {pro.GetValue(obj)}").CreateString().SpecialDump();
+        }
+
+        public static bool IsContained(this object obj, IEnumerable<object> objs)
+        {
+            return objs.Contains(obj);
         }
     }
 }

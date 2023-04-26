@@ -7,10 +7,12 @@ namespace StandartLibrary
     {
         static MethodNumber()
         {
+            Console.WriteLine("normal");
             var types = BasicLibrary.GetClassWithTheAttribute(typeof(GetMethodNumberAttribute));
             if(types == null) { return; }
             foreach (Type item in types)
             {
+                Console.WriteLine(item);
                 GetMethodNumberAttribute attClass = item.GetCustomAttribute<GetMethodNumberAttribute>()!;
                 MethodInfo[] methods = item.GetMethods();
                 int methodsNumber = methods.Length;

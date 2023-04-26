@@ -1,6 +1,7 @@
 ﻿namespace StandartLibrary
 {
-    public static class Platform
+    
+    static class Platform
     {
         public static int windows = 0;
         public static int Android = 1;

@@ -1,6 +1,7 @@
 ﻿namespace StandartLibrary.MyResolutionClass
 {
-    public static class Resolution
+    
+    static class Resolution
     {
         public enum ResolutionOptions
         {
