@@ -8,7 +8,7 @@ using System.Runtime.Versioning;
 namespace StandartLibrary
 {
     [SupportedOSPlatform(nameof(Platform.windows))]
-    public class ImageDeal : IDisposable 
+    public class ImageDeal : IDisposable
     {
         private Size _size;
         private float _opacity = 1;
